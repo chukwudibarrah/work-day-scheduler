@@ -1,3 +1,5 @@
+jQuery(document).ready(function(){
+
 var currentDay = $("#currentDay");
 var dayBlock = $("#dayBlock");
 
@@ -6,53 +8,48 @@ currentDay = moment().format("dddd, MMMM Do");
 // console.log(currentDay);
 $("#currentDay").text(currentDay);
 
-// get current hour
-currentHour = moment().format('HH');
-  console.log(currentHour);
+// get past, present and future hours
+currentHour = parseFloat(moment().format("HH"));
 
 var hoursArray = []; //array to store hours of day
-var theHours = [];
+// var theHours = [];
 
-function getHours () {
-    new Array(24).fill().forEach((acc, index) => {
+function getHours() {
+  new Array(24).fill().forEach((acc, index) => {
     //   hoursArray.push(moment( {hour: index} ).format('hA'));
-      hoursArray.push(moment({ hour: index, minute: 30 }).format('hA'));
-      theHours.push(moment({ hour: index, minute: 30 }).format('HH'));
-    })
-    return hoursArray;
-    return theHours;
+    hoursArray.push(moment({ hour: index, minute: 30 }).format("hA"));
+  });
+  return hoursArray;
+}
+getHours();
+
+$.each(hoursArray, function (index, value) {
+  var timeRow = $("<li>");
+  timeRow.addClass("time-block row hour");
+  timeRow.attr("data-number", index);
+  timeRow.text(value);
+  dayBlock.append(timeRow);
+
+  var eachHour = parseFloat(index);
+
+  var saveBtn = $("<button>");
+  $("button").addClass("saveBtn");
+  timeRow.append(saveBtn);
+
+  if (eachHour === currentHour) {
+    timeRow.addClass("present");
+  } else if (eachHour < currentHour) {
+    timeRow.addClass("future");
+  } else {
+    timeRow.addClass("past");
   }
-  getHours();
-//   console.log(getHours());
 
-//   var timeBlocks = $('<li>');
+  var textArea = $('<textarea>');
+  textArea.addClass("description");
+  timeRow.append(textArea);
+});
 
-var index;
-var timeBlocks;
 
-//   for (i = 0; i < hoursArray.length; i++) {
-    $.each(hoursArray, function(index, value) {
-    // timeBlocks.addClass('time-block', 'row', 'hour').text(hoursArray[i]);
-    // console.log('hours array: ', hoursArray[i]);
 
-    var timeBlocks = dayBlock.append('<li class="time-block row hour">' + value + '<button class="btn saveBtn"></button>' + '</li>');
 
-    if (currentHour === index) {
-        $('li').addClass('present');
-      } else if (currentHour > index) {
-        $('li').addClass('past');
-      } else {
-        $('li').addClass('future');
-      }
-
-  })
-
-//   for (i = 0; i < theHours.length; i++ ) {
-    if (currentHour == index-1) {
-      timeBlocks.addClass('present');
-    } else if (currentHour > index-1) {
-      timeBlocks.addClass('past');
-    } else {
-      timeBlocks.addClass('future');
-    }
-//   }
+});
