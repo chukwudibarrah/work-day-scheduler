@@ -52,6 +52,13 @@ $.each(hoursArray, function (index, value) {
   timeRow.append(textArea);
 });
 
+$(document).ready(function() {
+  $('button').click(function() {
+    var value = $('textarea').val();
+    alert(value);
+  })
+})
+
 
 // $('saveBtn').on('click', function() {
 //   saveSettings();
@@ -83,34 +90,34 @@ $.each(hoursArray, function (index, value) {
 // dayBlock.on('submit', handleEntrySubmit);
 
 
-renderLastRegistered();
+// renderLastRegistered();
 
-function renderLastRegistered() {
-  var userEntry = localStorage.getItem("userEntry");
+// function renderLastRegistered() {
+//   var userEntry = localStorage.getItem("userEntry");
 
-  if (!userEntry) {
-    return;
-  }
+//   if (!userEntry) {
+//     return;
+//   }
 
-  textArea.text = userEntry;
-}
+//   textArea.text = userEntry;
+// }
 
-$('saveBtn').on("click", function(event) {
-  event.preventDefault();
+// $('saveBtn').on("click", function(event) {
+//   event.preventDefault();
 
-  var userEntry = localStorage.theEntry;
+//   var userEntry = localStorage.theEntry;
 
-  var theText = $('input[name="textarea"]').val();
+//   var theText = $('input[name="textarea"]').val();
 
-  if (userEntry === "") {
-    displayMessage("error", "Entry cannot be blank");
-  } else {
-    alert("Success", "Saved successfully");
+//   if (userEntry === "") {
+//     displayMessage("error", "Entry cannot be blank");
+//   } else {
+//     alert("Success", "Saved successfully");
 
-    localStorage.setItem("userEntry", theText);
-    renderLastRegistered();
-  }
-});
+//     localStorage.setItem("userEntry", theText);
+//     renderLastRegistered();
+//   }
+// });
 
 
 });
